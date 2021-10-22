@@ -47,9 +47,7 @@ chmod +x /usr/local/bin/docker-compose
 mkdir -p /opt/phala
 # 下载yml文件
 wget -O /opt/phala/docker-compose.yml https://raw.githubusercontent.com/suugee/phala-prb/main/pha_cluster.yml
-cd /opt/phala/
-# 启动node
-docker-compose up -d node
+cd /opt/phala/ && docker-compose up -d node
 ```
 如果需要指定Node数据存储位置请修改/opt/phala/docker-compose.yml 好后再启动。
 ---
@@ -75,17 +73,14 @@ docker-compose up -d monitor	  #启动monitor服务
 #### worker安装基础环境
 ```
 sudo -i
-cd ~
-wget https://raw.githubusercontent.com/suugee/phala-prb/main/worker.sh
-chmod +x worker.sh
-./worker.sh install
+cd ~ && wget https://raw.githubusercontent.com/suugee/phala-prb/main/worker.sh
+chmod +x worker.sh && ./worker.sh install
 ```
 #### 启动pruntime
 ```
 sudo -i
 mkdir -p /opt/phala
-cd /opt/phala
-mv docker-compose.yml docker-compose.yml.bak
+cd /opt/phala && mv docker-compose.yml docker-compose.yml.bak
 wget -O /opt/phala/docker-compose.yml https://raw.githubusercontent.com/suugee/phala-prb/main/pha_cluster.yml
 docker-compose up -d pruntime
 ```
