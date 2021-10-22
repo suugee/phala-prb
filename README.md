@@ -74,7 +74,6 @@ chmod +x worker.sh && ./worker.sh install
 ```
 #### 启动pruntime
 ```
-sudo -i
 mkdir -p /opt/phala
 cd /opt/phala && mv docker-compose.yml docker-compose.yml.bak
 wget -O /opt/phala/docker-compose.yml https://raw.githubusercontent.com/suugee/phala-prb/main/pha_cluster.yml
