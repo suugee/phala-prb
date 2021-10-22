@@ -64,6 +64,7 @@ docker-compose up -d lifecycle	  #启动lifecycle服务
 docker-compose up -d monitor	  #启动monitor服务
 ```
 #### 访问monitor：http://prb机器ip地址:3000
+- Monitor添加pool，worker等操作就不写了，按照页面上的提示操作即可，添加worker地址记得 http://ip:8000 带上8000端口。
 ---
 ### 3. Worker机部署
 #### worker安装基础环境
