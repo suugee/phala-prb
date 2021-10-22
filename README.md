@@ -1,4 +1,4 @@
-# Phala-prb 集群部署教程
+# Phala-prb 集群部署教程 (视频教程录制中)
 
 ### 本教程使用的集群架构：
 ![本方案使用的集群架构](https://raw.githubusercontent.com/suugee/phala-prb/main/prb.png)
