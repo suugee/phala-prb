@@ -1,4 +1,14 @@
 # Phala-prb 集群部署教程
+
+### 本教程使用的集群架构：
+![本方案使用的集群架构](https://raw.githubusercontent.com/suugee/phala-prb/main/prb.png)
+
+本方案适合2-50台机器小集群，另外也可以将prb从node分离，如果集群更大，考虑node稳定性问题可以使用多node做主备、负载均衡或者[联系苏格](#联系苏格)为您定制集群方案。
+
+如果你觉得本教程对你有用，就给我打赏一点 PHA 吧O(∩_∩)O：
+- Khala地址：42iT6whLuSeWxqhXTYDiCyKqWwqNGWhWWmUS4Fdt4Ujnr21y
+- BSC地址：0xE4a0e05cb060A0423d14C7878af6980DD0EAA014
+
 # 目录
 - [系统要求](#系统要求)
 - [Node机部署](#1-node机部署)
@@ -11,7 +21,6 @@
   - [安装docker环境](#worker安装基础环境)
   - [启动pruntime容器](#启动pruntime)
 ---
-![prb](https://github.com/suugee/phala-prb/blob/main/prb.png)
 ### 系统要求
 - Ubuntu LTS 20.04
 - Docker 20.10或更新
@@ -103,3 +112,12 @@ docker logs -f fetch   #查看fetch日志
 移除容器: docker rm pruntime
 查看日志: docker logs -f pruntime
 ```
+---
++ 官方论坛：https://forum.phala.network/
++ 官方wiki：https://wiki.phala.network/zh-cn/docs/
++ Github: https://github.com/Phala-Network
++ Telegram：https://t.me/phalaCN
+### 联系苏格
++ 苏格QQ：6559178
++ 苏格Telegram：https://t.me/sparksure
++ 苏格Github：https://github.com/suugee/phala-prb
