@@ -21,13 +21,14 @@
   - [安装docker环境](#worker安装基础环境)
   - [启动pruntime容器](#启动pruntime)
 ---
-### 系统要求（node和prb非worker）
+### 系统要求
 - Ubuntu LTS 20.04
 - Docker 20.10或更新
 - Docker Compose 1.29 或更新
 - CPU 10核以上高主频（i9十代、AMD3950X等）
 - 内存 32G
 - 硬盘 1T M.2 NVME
+- 以上为跑node和prb的机器要求，非worker机要求，worker机必须要得支持SGX。
 ---
 ### 1. Node机部署
 
