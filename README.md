@@ -1,5 +1,15 @@
-# phala-prb 集群部署教程
-
+# Phala-prb 集群部署教程
+# 目录
+- [系统要求](#系统要求)
+- [Node机部署](#1-node机部署)
+  - [安装docker环境](#安装docker环境)
+  - [启动Node容器](#安装docker环境)
+- [Prb机部署](#2-prb机部署)
+  - [启动Prb容器](#安装docker环境)
+- [Worker机部署](#3-worker机部署)
+  - [安装docker环境](#worker安装基础环境)
+  - [启动pruntime容器](#启动pruntime)
+---
 ### 系统要求
 - Ubuntu LTS 20.04
 - Docker 20.10或更新
@@ -7,7 +17,7 @@
 - CPU 10核以上高主频（i9-10850K AMD3950X等）
 - 内存 32G
 - 硬盘 1T M.2 NVME
-
+---
 ### 1. Node机部署
 
 #### 安装Docker环境
@@ -20,7 +30,7 @@ curl -sSL https://get.daocloud.io/docker | sh
 curl -L https://get.daocloud.io/docker/compose/releases/download/v2.0.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ```
-安装好基础环境后下载docker-compose配置文件，并启动node。
+#### 安装好基础环境后下载docker-compose配置文件，并启动node。
 ```
 # 创建目录
 mkdir -p /opt/phala
@@ -51,7 +61,7 @@ docker-compose up -d monitor	  #启动monitor服务
 #### 访问monitor：http://prb机器ip地址:3000
 ---
 ### 3. Worker机部署
-#### 先给worker安装基础环境
+#### worker安装基础环境
 ```
 sudo -i
 cd ~
