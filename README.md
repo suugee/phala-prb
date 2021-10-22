@@ -11,6 +11,7 @@
   - [安装docker环境](#worker安装基础环境)
   - [启动pruntime容器](#启动pruntime)
 ---
+![prb](https://github.com/suugee/phala-prb/blob/main/prb.png)
 ### 系统要求
 - Ubuntu LTS 20.04
 - Docker 20.10或更新
