@@ -28,7 +28,8 @@
 - CPU 10核以上高主频（i9十代、AMD3950X等）
 - 内存 32G
 - 硬盘 1T M.2 NVME
-- 以上为跑node和prb的机器要求，非worker机要求，worker机必须要得支持SGX。
+- 内网 千兆交换机，千兆网卡，6类网线
+- 以上为跑node和prb的机器要求，非worker机要求，worker机必须要支持SGX。
 ---
 ### 1. Node机部署
 
