@@ -84,6 +84,8 @@ docker-compose up -d pruntime
 + Node机常用操作
 ```
 启动容器：docker-compose up -d node
+停止容器：docker stop node
+移除容器: docker rm node
 查看日志：docker logs -f node -n 100
 ```
 + Prb机常用操作
@@ -98,6 +100,7 @@ docker logs -f fetch   #查看fetch日志
 ```
 + Worker机常用操作
 ```
+启动容器：docker-compose up -d pruntime
 停止容器: docker stop pruntime
 移除容器: docker rm pruntime
 查看日志: docker logs -f pruntime
