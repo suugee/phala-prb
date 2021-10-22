@@ -49,17 +49,13 @@ mkdir -p /opt/phala
 wget -O /opt/phala/docker-compose.yml https://raw.githubusercontent.com/suugee/phala-prb/main/pha_cluster.yml
 cd /opt/phala/ && docker-compose up -d node
 ```
-如果需要指定Node数据存储位置请修改/opt/phala/docker-compose.yml 好后再启动。
+- 如果需要指定Node数据存储位置请修改/opt/phala/docker-compose.yml 好后再启动。
 ---
 ### 2. Prb机部署
-#### 如果和node机部署在同一台则无需重复安装Docker环境：
+#### 如果和node机部署在同一台则无需重复安装Docker环境和下载配置文件：
 ```
 # 切换root
 sudo -i
-# 创建目录
-mkdir -p /opt/phala
-# 下载yml文件
-wget -O /opt/phala/docker-compose.yml https://raw.githubusercontent.com/suugee/phala-prb/main/pha_cluster.yml
 cd /opt/phala/
 docker-compose up -d redis io	  #启动基础服务
 docker-compose up -d fetch	  #启动fetch服务
