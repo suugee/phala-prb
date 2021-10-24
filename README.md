@@ -73,7 +73,7 @@ docker-compose up -d monitor	  #启动monitor服务
 ```
 sudo -i
 cd ~ && wget https://raw.githubusercontent.com/suugee/phala-prb/main/worker.sh
-chmod +x worker.sh && ./worker.sh install
+chmod +x worker.sh && ./worker.sh
 ```
 #### 启动pruntime
 ```
