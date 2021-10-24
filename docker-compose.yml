@@ -1,19 +1,17 @@
 version: "3"
 services:
- phala-pruntime:
-   image: phalanetwork/phala-pruntime
-   container_name: phala-pruntime
-   hostname: phala-pruntime
-   ports:
-    - "8000:8000"
-   devices:
-      - /dev/sgx/enclave
-      - /dev/sgx/provision
+  phala-pruntime:
+    image: phalanetwork/phala-pruntime
+    container_name: phala-pruntime
+    hostname: phala-pruntime
+    ports:
+      - "8000:8000"
+    devices:
       - /dev/sgx_enclave
       - /dev/sgx_provision
       - /dev/isgx
-   environment:
-    - EXTRA_OPTS=--cores=6
-    - ROCKET_ADDRESS=0.0.0.0
-   volumes:
-    - /var/khala-pruntime-data:/root/data
+    environment:
+      - EXTRA_OPTS=--cores=${CORES}
+      - ROCKET_ADDRESS=0.0.0.0
+    volumes:
+      - /var/khala-pruntime-data:/root/data
