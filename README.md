@@ -23,12 +23,12 @@
 ---
 ### 系统要求
 - Ubuntu LTS 20.04
-- Docker 20.10或更新
-- Docker Compose 1.29 或更新
-- CPU 10核以上高主频（i9十代、AMD3950X等）
-- 内存 32G
-- 硬盘 1T M.2 NVME
-- 内网 千兆交换机，千兆网卡，6类网线
+- Docker ≥ 20.10或更新
+- Docker ≥ Compose 1.29 或更新
+- CPU ≥ 10核以上高主频（i9十代、AMD3950X等）
+- 内存 ≥ 32G
+- 硬盘 ≥ 2T M.2 NVME
+- 内网 千兆交换机，千兆网卡，六类/超六类千兆网线
 - 以上为跑node和prb的机器要求，非worker机要求，worker机必须要支持SGX。
 ---
 ### 1. Node机部署
@@ -56,8 +56,6 @@ cd /opt/phala/ && docker-compose up -d node
 ### 2. Prb机部署
 #### 如果和node机部署在同一台则无需重复安装Docker环境和下载配置文件：
 ```
-# 切换root
-sudo -i
 cd /opt/phala/
 docker-compose up -d redis io	  #启动基础服务
 docker-compose up -d fetch	  #启动fetch服务
@@ -66,7 +64,7 @@ docker-compose up -d lifecycle	  #启动lifecycle服务
 docker-compose up -d monitor	  #启动monitor服务
 ```
 #### 访问monitor：http://prb机器ip地址:3000
-- Monitor添加pool，worker等操作就不写了，按照页面上的提示操作即可，添加worker地址记得 http://ip:8000 带上8000端口。
+- Monitor添加pool，worker等操作就不写了，按照页面上的提示操作即可，添加worker地址记得 http://ip:8000 带上8000端口，添加完worker后需要重启lifecycle容器。
 ---
 ### 3. Worker机部署
 #### worker安装基础环境
