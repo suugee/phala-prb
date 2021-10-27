@@ -29,7 +29,7 @@
 - 内存 ≥ 32G
 - 硬盘 ≥ 2T M.2 NVME
 - 内网 千兆交换机，千兆网卡，六类/超六类千兆网线
-- 以上为跑node和prb的机器要求，非worker机要求，worker机必须要支持SGX。
+- 以上为跑node+prb机器的建议配置，非worker机要求，worker机必须要支持SGX。
 ---
 ### 1. Node机部署
 
