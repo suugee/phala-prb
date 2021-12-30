@@ -40,7 +40,7 @@ sudo -i
 # 安装Docker
 curl -sSL https://get.daocloud.io/docker | sh
 # 安装Docker-compose
-curl -L https://get.daocloud.io/docker/compose/releases/download/v2.0.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+curl -L https://get.daocloud.io/docker/compose/releases/download/v1.29.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ```
 #### 安装好基础环境后下载docker-compose配置文件，并启动node。
