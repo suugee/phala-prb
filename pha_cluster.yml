@@ -2,7 +2,7 @@ version: "3"
 
 x-defaults: &defaults
   volumes: &default-volume-config
-    - ./data:/var/data
+    - /var/khala-dev-node/prb_data:/var/data
 
 services:
   fetch:
