@@ -32,7 +32,7 @@ function install_depenencies()
 						apt-get install -y nodejs
 						;;
 					yq)
-						wget https://ghproxy.com/https://github.com/mikefarah/yq/releases/download/v4.11.2/yq_linux_amd64.tar.gz -O /tmp/yq_linux_amd64.tar.gz
+						wget https://github.suugee.workers.dev/https://github.com/mikefarah/yq/releases/download/v4.11.2/yq_linux_amd64.tar.gz -O /tmp/yq_linux_amd64.tar.gz
 						tar -xvf /tmp/yq_linux_amd64.tar.gz -C /tmp
 						mv /tmp/yq_linux_amd64 /usr/bin/yq
 						rm /tmp/yq_linux_amd64.tar.gz
