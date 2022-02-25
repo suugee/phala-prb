@@ -1,7 +1,7 @@
 # Phala-prb 集群部署教程 (视频教程录制中)
 
 ### 本教程使用的集群架构：
-![本方案使用的集群架构](https://raw.githubusercontent.com/suugee/phala-prb/main/prb.png)
+![本方案使用的集群架构](https://github.suugee.workers.dev/https://raw.githubusercontent.com/suugee/phala-prb/main/prb.png)
 
 本方案适合2-50台机器小集群，另外也可以单独一台机器运行prb，如果集群更大，考虑node稳定性问题可以使用多node做主备、负载均衡或者[联系苏格](#联系苏格)为您定制集群方案。
 
