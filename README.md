@@ -112,6 +112,7 @@ docker logs -f fetch   #查看fetch日志
 + 官方Github: https://github.com/Phala-Network
 + 官方Telegram：https://t.me/phalaCN
 ### 联系苏格
++ 苏格VX：suugee_bit
 + 苏格QQ：6559178
 + 苏格Telegram：https://t.me/sparksure
 + 苏格Github：https://github.com/suugee/phala-prb
