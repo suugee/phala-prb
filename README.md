@@ -3,11 +3,8 @@
 ### 本教程使用的集群架构：
 ![本方案使用的集群架构](https://github.suugee.workers.dev/https://raw.githubusercontent.com/suugee/phala-prb/main/prb.png)
 
-本方案适合2-50台机器小集群，另外也可以单独一台机器运行prb，如果集群更大，考虑node稳定性问题可以使用多node做主备、负载均衡或者[联系苏格](#联系苏格)为您定制集群方案。
+本方案适合2-50台机器小型集群，也可以单独一台机器运行prb，如果集群更大，考虑node稳定性问题可以使用多node做主备、负载均衡或者[联系苏格](#联系苏格)为您定制集群方案。
 
-如果你觉得本教程对你有用，就给我打赏一点 PHA 吧O(∩_∩)O：
-- Khala地址：42iT6whLuSeWxqhXTYDiCyKqWwqNGWhWWmUS4Fdt4Ujnr21y
-- BSC地址：0xE4a0e05cb060A0423d14C7878af6980DD0EAA014
 
 # 目录
 - [系统要求](#系统要求)
@@ -108,9 +105,10 @@ docker logs -f fetch   #查看fetch日志
 ```
 ---
 + 官方论坛：https://forum.phala.network/
-+ 官方wiki：https://wiki.phala.network/zh-cn/docs/
++ 官方wiki：https://wiki.phala.network/
 + 官方Github: https://github.com/Phala-Network
 + 官方Telegram：https://t.me/phalaCN
+
 ### 联系苏格
 + 苏格VX：suugee_bit
 + 苏格QQ：6559178
