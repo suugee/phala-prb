@@ -1,9 +1,9 @@
-# Phala-prb 集群部署教程 (视频教程录制中)
+# Phala-prb 集群部署教程
 
 ### 本教程使用的集群架构：
 ![本方案使用的集群架构](https://github.suugee.workers.dev/https://raw.githubusercontent.com/suugee/phala-prb/main/prb.png)
 
-本方案适合2-50台机器小型集群，也可以单独一台机器运行prb，如果集群更大，考虑node稳定性问题可以使用多node做主备、负载均衡或者[联系苏格](#联系苏格)为您定制集群方案。
+本方案适合2-50台机器小型集群，也可以单独一台机器运行prb，如果集群更大，考虑node稳定性问题可以使用多node做主备、负载均衡或者[联系苏格](#联系苏格)为您定制集群方案，公益教程不提供其他免费指导请谅解。
 
 
 # 目录
@@ -61,7 +61,7 @@ docker-compose up -d lifecycle	  #启动lifecycle服务
 docker-compose up -d monitor	  #启动monitor服务
 ```
 #### 访问monitor：http://prb机器ip地址:3000
-- Monitor添加pool，worker等操作就不写了，按照页面上的提示操作即可，添加worker地址记得 http://ip:8000 带上8000端口，添加完worker后需要重启lifecycle容器。
+- Monitor添加pool，worker等操作就不写了，按照页面上的提示操作即可，添加worker地址记得 http://ip:8000 带上8000端口，添加完worker后需要重启lifecycle容器，实在搞不明白可以联系苏格付费指导。
 ---
 ### 3. Worker机部署
 #### worker安装基础环境
