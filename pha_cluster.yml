@@ -152,8 +152,6 @@ services:
     environment:
      - NODE_NAME=PNODE
      - NODE_ROLE=MINER
-     - "PARACHAIN_EXTRA_ARGS=--state-cache-size 671088640 --db-cache 2048 --max-runtime-instances 100"
-     - "RELAYCHAIN_EXTRA_ARGS=--state-cache-size 671088640 --db-cache 2048 --max-runtime-instances 100"
     volumes:
      - /var/khala-dev-node:/root/data
 
