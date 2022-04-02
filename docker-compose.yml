@@ -1,17 +1,173 @@
 version: "3"
+
+x-defaults: &defaults
+  volumes: &default-volume-config
+    - /var/khala-dev-node/prb__v2data:/var/data
+
 services:
-  phala-pruntime:
-    image: phalanetwork/phala-pruntime
-    container_name: phala-pruntime
-    hostname: phala-pruntime
-    ports:
-      - "8000:8000"
-    devices:
-      - /dev/sgx_enclave
-      - /dev/sgx_provision
-      - /dev/isgx
+  fetch:
+    image: phalanetwork/prb:next
+    hostname: fetch
+    container_name: fetch
+    depends_on:
+      - redis
+      - io
+    volumes: *default-volume-config
     environment:
-      - EXTRA_OPTS=--cores=6
-      - ROCKET_ADDRESS=0.0.0.0
+      - PHALA_MODULE=fetch
+      - NODE_ENV=testing
+      - PHALA_DB_HOST=io
+      - PHALA_DB_PORT_BASE=9000
+      - PHALA_LOGGER_LEVEL=debug
+      - PHALA_PARENT_CHAIN_ENDPOINT=ws://node:9945
+      - PHALA_CHAIN_ENDPOINT=ws://node:9944
+      - PHALA_REDIS_ENDPOINT=redis://redis:6379/
+
+  lifecycle:
+    image: phalanetwork/prb:next
+    hostname: lifecycle
+    container_name: lifecycle
+    depends_on:
+      - redis
+      - redis-q
+      - io
+    volumes: *default-volume-config
+    environment:
+      - PHALA_MODULE=lifecycle
+      - NODE_ENV=testing
+      - PHALA_DB_HOST=io
+      - PHALA_DB_PORT_BASE=9000
+      - PHALA_LOGGER_LEVEL=debug
+      - PHALA_PARENT_CHAIN_ENDPOINT=ws://node:9945
+      - PHALA_CHAIN_ENDPOINT=ws://node:9944
+      - PHALA_REDIS_ENDPOINT=redis://redis:6379/
+      - PHALA_Q_REDIS_ENDPOINT=redis://redis-q:6379/
+      - PHALA_NAMESPACE=default
+      - PHALA_ENABLE_KEEP_ALIVE=true
+
+  trade:
+    image: phalanetwork/prb:next
+    hostname: trade
+    container_name: trade
+    depends_on:
+      - redis
+      - redis-q
+      - io
+    volumes: *default-volume-config
+    environment:
+      - PHALA_MODULE=trade
+      - NODE_ENV=testing
+      - PHALA_DB_HOST=io
+      - PHALA_DB_PORT_BASE=9000
+      - PHALA_LOGGER_LEVEL=debug
+      - PHALA_PARENT_CHAIN_ENDPOINT=ws://node:9945
+      - PHALA_CHAIN_ENDPOINT=ws://node:9944
+      - PHALA_REDIS_ENDPOINT=redis://redis:6379/
+      - PHALA_Q_REDIS_ENDPOINT=redis://redis-q:6379/
+      - PHALA_NAMESPACE=default
+
+  inspect:
+    image: phalanetwork/prb:next
+    hostname: inspect
+    depends_on:
+      - io
+    volumes: *default-volume-config
+    environment:
+      - PHALA_MODULE=io/inspect
+      - NODE_ENV=inspect
+      - PHALA_DB_HOST=io
+      - PHALA_DB_PORT_BASE=9000
+      - PHALA_LOGGER_LEVEL=debug
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+      - "9003:9003"
+
+  io:
+    << : *defaults
+    image: phalanetwork/prb:next
+    hostname: io
+    restart: always
+    environment:
+      - PHALA_MODULE=io
+      - NODE_ENV=testing
+      - PHALA_DB_HOST=io
+      - PHALA_DB_PORT_BASE=9000
+      - PHALA_LOGGER_LEVEL=debug
+      - PHALA_DB_PREFIX=/var/data
+      - PHALA_DB_TYPE=rocksdb
+
+  redis:
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "no", '--save', '']
+    restart: always
+    hostname: redis
+    ports:
+      - "63791:6379"
+
+  redis-q:
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "no", '--save', '']
+    restart: always
+    hostname: redis-q
+    ports:
+      - "63792:6379"
+
+  arena:
+    image: phalanetwork/prb:next
+    hostname: trade
+    depends_on:
+      - redis
+      - io
+    volumes: *default-volume-config
+    environment:
+      - PHALA_MODULE=utils/arena
+      - NODE_ENV=testing
+      - PHALA_DB_HOST=io
+      - PHALA_DB_PORT_BASE=9000
+      - PHALA_LOGGER_LEVEL=debug
+      - REDIS_ENDPOINT=redis://redis-q:6379/
+    ports:
+      - "4567:4567"
+
+  monitor:
+    image: phalanetwork/prb-monitor:next
+    hostname: monitor
+    environment:
+      - "REDIS_ENDPOINT=redis://redis:6379"
+      - PHALA_NAMESPACE=default
+    ports:
+      - "3000:3000"
+      
+  node:
+    image: phalanetwork/khala-node:latest
+    container_name: node
+    hostname: node
+    ports:
+     - "9933:9933"
+     - "9934:9934"
+     - "9944:9944"
+     - "9945:9945"
+     - "30333:30333"
+     - "30334:30334"
+    environment:
+     - NODE_NAME=PNODE
+     - NODE_ROLE=MINER
     volumes:
-      - /var/khala-pruntime-data:/root/data
+     - /var/khala-dev-node:/root/data
+
+  pruntime:
+    image: phalanetwork/phala-pruntime:latest
+    container_name: pruntime
+    hostname: pruntime
+    ports:
+     - "8000:8000"
+    devices:
+       - /dev/sgx_enclave
+       - /dev/sgx_provision
+       - /dev/isgx
+    environment:
+     - EXTRA_OPTS=--cores=6
+     - ROCKET_ADDRESS=0.0.0.0
+    volumes:
+     - /var/khala-pruntime-data:/root/data
