@@ -45,7 +45,7 @@ chmod +x /usr/local/bin/docker-compose
 # 创建目录
 mkdir -p /opt/phala
 # 下载yml文件
-wget -O /opt/phala/node.yml https://raw.githubusercontent.com/suugee/phala-prb/next/node.yml
+wget -O /opt/phala/node.yml https://github.suugee.workers.dev/https://raw.githubusercontent.com/suugee/phala-prb/next/node.yml
 docker-compose -f /opt/phala/node.yml up -d
 ```
 - 如果需要指定Node数据存储位置请修改 /opt/phala/node.yml 好后再启动。
@@ -57,8 +57,53 @@ docker-compose -f /opt/phala/docker-compose.yml up -d  # 一键启动所有服�
 
 ```
 #### 访问monitor：http://prb机器ip地址:3000
-- Monitor添加pool，worker等操作就不写了，按照页面上的提示操作即可，添加worker地址记得 http://ip:8000 带上8000端口，添加完worker后需要重启lifecycle容器，实在搞不明白可以联系苏格付费指导。
+
+### 批量添加pools和workers
+
+- 导入pools
+```
+curl --location --request POST 'http://path.to.monitor/ptp/proxy/Qmbz...RjpwY/CreatePool' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "pools": [
+        {
+            "pid": 2,
+            "name": "test2",
+            "owner": {
+                "mnemonic": "boss...chase"
+            },
+            "enabled": true,
+            "realPhalaSs58": "3zieG9...1z5g"
+        }
+    ]
+}'
+```
+- 导入workers
+```
+curl --location --request POST 'http://path.to.monitor/ptp/proxy/Qmbz...RjpwY/CreateWorker' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "workers": [
+        {
+            "pid": 2,
+            "name": "test-node-1",
+            "endpoint": "http://path.to.worker1:8000",
+            "enabled": true,
+            "stake": "4000000000000000"
+        },
+        {
+            "pid": 2,
+            "name": "test-node-2",
+            "endpoint": "http://path.to.worker2:8000",
+            "enabled": true,
+            "stake": "4000000000000000"
+        }
+    ]
+}'
+```
+
 ---
+
 ### 3. Worker机部署
 #### worker安装基础环境
 ```
@@ -74,6 +119,7 @@ wget -O /opt/phala/docker-compose.yml https://raw.githubusercontent.com/suugee/p
 docker-compose up -d pruntime
 ```
 ---
+
 ### 常用命令
 + Node机常用操作
 ```
