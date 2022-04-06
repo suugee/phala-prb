@@ -1,9 +1,9 @@
-# Phala-prb 集群部署教程
+# Phala PRB V2 集群全新部署教程
 
 ### 本教程使用的集群架构：
 ![本方案使用的集群架构](https://github.suugee.workers.dev/https://raw.githubusercontent.com/suugee/phala-prb/main/prb.png)
 
-本方案适合2-50台机器小型集群，也可以单独一台机器运行prb，如果集群更大，考虑node稳定性问题可以使用多node做主备、负载均衡或者[联系苏格](#联系苏格)为您定制集群方案，公益教程不提供其他免费指导请谅解。
+本方案适合50台内小型集群，也可以单独一台机器运行prb，如果集群更大，考虑node稳定性问题可以使用多node做主备、负载均衡或者[联系苏格](#联系苏格)为您定制集群方案，公益教程不提供其他免费指导请谅解。
 
 
 # 目录
@@ -45,20 +45,16 @@ chmod +x /usr/local/bin/docker-compose
 # 创建目录
 mkdir -p /opt/phala
 # 下载yml文件
-wget -O /opt/phala/docker-compose.yml https://raw.githubusercontent.com/suugee/phala-prb/main/pha_cluster.yml
-cd /opt/phala/ && docker-compose up -d node
+wget -O /opt/phala/node.yml https://raw.githubusercontent.com/suugee/phala-prb/next/node.yml
+docker-compose -f /opt/phala/node.yml up -d
 ```
-- 如果需要指定Node数据存储位置请修改/opt/phala/docker-compose.yml 好后再启动。
+- 如果需要指定Node数据存储位置请修改 /opt/phala/node.yml 好后再启动。
 ---
 ### 2. Prb机部署
 #### 如果和node机部署在同一台则无需重复安装Docker环境和下载配置文件：
 ```
-cd /opt/phala/
-docker-compose up -d redis io	  #启动基础服务
-docker-compose up -d fetch	  #启动fetch服务
-docker-compose up -d trade	  #启动trade服务
-docker-compose up -d lifecycle	  #启动lifecycle服务
-docker-compose up -d monitor	  #启动monitor服务
+docker-compose -f /opt/phala/docker-compose.yml up -d  # 一键启动所有服务
+
 ```
 #### 访问monitor：http://prb机器ip地址:3000
 - Monitor添加pool，worker等操作就不写了，按照页面上的提示操作即可，添加worker地址记得 http://ip:8000 带上8000端口，添加完worker后需要重启lifecycle容器，实在搞不明白可以联系苏格付费指导。
@@ -81,20 +77,23 @@ docker-compose up -d pruntime
 ### 常用命令
 + Node机常用操作
 ```
-启动容器：docker-compose up -d node
+启动容器：docker-compose -f /opt/phala/node.yml up -d
 停止容器：docker stop node
+重启容器：docker restart node
 移除容器: docker rm node
 查看日志：docker logs -f node -n 100
 ```
 + Prb机常用操作
 ```
+cd /opt/phala
 docker-compose up -d redis io	#启动基础服务
-docker-compose up -d fetch	#启动fetch服务
+docker-compose up -d data_provider	#启动data_provider服务
 docker-compose up -d trade	#启动trade服务
 docker-compose up -d lifecycle	#启动lifecycle服务
 docker-compose up -d monitor	#启动monitor服务
 docker ps -a   #查看容器状态
 docker logs -f fetch   #查看fetch日志
+docker restart 容器名   #重启某个容器
 ```
 + Worker机常用操作
 ```

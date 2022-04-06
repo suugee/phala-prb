@@ -4,7 +4,9 @@ version: "2"
 
 x-defaults: &defaults
   volumes: &default-volume-config
+  # 旧版V0数据存储位置 /var/khala-dev-node/prb_data
     - /var/khala-dev-node/prb_data:/var/data_old
+  # 新版V2数据存储位置 /var/khala-dev-node/prb_v2data
     - /var/khala-dev-node/prb_v2data:/var/data
 
 services:
