@@ -1,4 +1,6 @@
-# Phala-prb 集群部署教程
+# Phala PRB VO 集群部署教程
+---
+### PRB V2 部署教程请[切换到Next分支](https://github.com/suugee/phala-prb/tree/next)
 
 ### 本教程使用的集群架构：
 ![本方案使用的集群架构](https://github.suugee.workers.dev/https://raw.githubusercontent.com/suugee/phala-prb/main/prb.png)
