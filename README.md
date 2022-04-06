@@ -46,8 +46,10 @@ chmod +x /usr/local/bin/docker-compose
 ```
 # 创建目录
 mkdir -p /opt/phala
+
 # 下载yml文件
 wget -O /opt/phala/node.yml https://github.suugee.workers.dev/https://raw.githubusercontent.com/suugee/phala-prb/next/node.yml
+
 docker-compose -f /opt/phala/node.yml up -d
 ```
 - 如果需要指定Node数据存储位置请修改 /opt/phala/node.yml 好后再启动。
@@ -55,7 +57,11 @@ docker-compose -f /opt/phala/node.yml up -d
 ### 2. Prb机部署
 #### 如果和node机部署在同一台则无需重复安装Docker环境和下载配置文件：
 ```
-docker-compose -f /opt/phala/docker-compose.yml up -d  # 一键启动所有服务
+# 下载yml配置文件
+wget -O /opt/phala/docker-compose.yml https://github.suugee.workers.dev/https://raw.githubusercontent.com/suugee/phala-prb/next/docker-compose.yml
+
+# 一键启动所有服务
+docker-compose -f /opt/phala/docker-compose.yml up -d
 
 ```
 #### 访问monitor：http://prb机器ip地址:3000
