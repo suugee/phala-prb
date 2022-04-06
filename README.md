@@ -1,5 +1,7 @@
 # Phala PRB V2 集群全新部署教程
 
+### 如果你是PRB V0 升级 V2 [点击此处](https://github.com/suugee/phala-prb/blob/next/V0-V2.md)
+
 ### 本教程使用的集群架构：
 ![本方案使用的集群架构](https://github.suugee.workers.dev/https://raw.githubusercontent.com/suugee/phala-prb/main/prb.png)
 
