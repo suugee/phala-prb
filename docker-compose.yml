@@ -1,173 +1,205 @@
-version: "3"
+# docker-compose 来自于 Phala Network 官方Repo !   整理 By 苏格
+
+version: "2"
 
 x-defaults: &defaults
   volumes: &default-volume-config
-    - /var/khala-dev-node/prb__v2data:/var/data
+    - /var/khala-dev-node/prb_data:/var/data
 
 services:
-  fetch:
+  data_provider:
     image: phalanetwork/prb:next
-    hostname: fetch
-    container_name: fetch
-    depends_on:
-      - redis
-      - io
-    volumes: *default-volume-config
-    environment:
-      - PHALA_MODULE=fetch
-      - NODE_ENV=testing
-      - PHALA_DB_HOST=io
-      - PHALA_DB_PORT_BASE=9000
-      - PHALA_LOGGER_LEVEL=debug
-      - PHALA_PARENT_CHAIN_ENDPOINT=ws://node:9945
-      - PHALA_CHAIN_ENDPOINT=ws://node:9944
-      - PHALA_REDIS_ENDPOINT=redis://redis:6379/
-
-  lifecycle:
-    image: phalanetwork/prb:next
-    hostname: lifecycle
-    container_name: lifecycle
-    depends_on:
-      - redis
-      - redis-q
-      - io
-    volumes: *default-volume-config
-    environment:
-      - PHALA_MODULE=lifecycle
-      - NODE_ENV=testing
-      - PHALA_DB_HOST=io
-      - PHALA_DB_PORT_BASE=9000
-      - PHALA_LOGGER_LEVEL=debug
-      - PHALA_PARENT_CHAIN_ENDPOINT=ws://node:9945
-      - PHALA_CHAIN_ENDPOINT=ws://node:9944
-      - PHALA_REDIS_ENDPOINT=redis://redis:6379/
-      - PHALA_Q_REDIS_ENDPOINT=redis://redis-q:6379/
-      - PHALA_NAMESPACE=default
-      - PHALA_ENABLE_KEEP_ALIVE=true
-
-  trade:
-    image: phalanetwork/prb:next
-    hostname: trade
-    container_name: trade
-    depends_on:
-      - redis
-      - redis-q
-      - io
-    volumes: *default-volume-config
-    environment:
-      - PHALA_MODULE=trade
-      - NODE_ENV=testing
-      - PHALA_DB_HOST=io
-      - PHALA_DB_PORT_BASE=9000
-      - PHALA_LOGGER_LEVEL=debug
-      - PHALA_PARENT_CHAIN_ENDPOINT=ws://node:9945
-      - PHALA_CHAIN_ENDPOINT=ws://node:9944
-      - PHALA_REDIS_ENDPOINT=redis://redis:6379/
-      - PHALA_Q_REDIS_ENDPOINT=redis://redis-q:6379/
-      - PHALA_NAMESPACE=default
-
-  inspect:
-    image: phalanetwork/prb:next
-    hostname: inspect
-    depends_on:
-      - io
-    volumes: *default-volume-config
-    environment:
-      - PHALA_MODULE=io/inspect
-      - NODE_ENV=inspect
-      - PHALA_DB_HOST=io
-      - PHALA_DB_PORT_BASE=9000
-      - PHALA_LOGGER_LEVEL=debug
-    ports:
-      - "9000:9000"
-      - "9001:9001"
-      - "9003:9003"
-
-  io:
-    << : *defaults
-    image: phalanetwork/prb:next
-    hostname: io
+    hostname: data_provider
+    network_mode: host
     restart: always
-    environment:
-      - PHALA_MODULE=io
-      - NODE_ENV=testing
-      - PHALA_DB_HOST=io
-      - PHALA_DB_PORT_BASE=9000
-      - PHALA_LOGGER_LEVEL=debug
-      - PHALA_DB_PREFIX=/var/data
-      - PHALA_DB_TYPE=rocksdb
-
-  redis:
-    image: redis:alpine
-    command: ["redis-server", "--appendonly", "no", '--save', '']
-    restart: always
-    hostname: redis
-    ports:
-      - "63791:6379"
-
-  redis-q:
-    image: redis:alpine
-    command: ["redis-server", "--appendonly", "no", '--save', '']
-    restart: always
-    hostname: redis-q
-    ports:
-      - "63792:6379"
-
-  arena:
-    image: phalanetwork/prb:next
-    hostname: trade
-    depends_on:
-      - redis
-      - io
     volumes: *default-volume-config
+    logging:
+      options:
+        # 保存的日志大小
+        # max-size: "1g"
+        max-size: "500m"
     environment:
-      - PHALA_MODULE=utils/arena
-      - NODE_ENV=testing
-      - PHALA_DB_HOST=io
-      - PHALA_DB_PORT_BASE=9000
+      # 要启动的模块
+      - PHALA_MODULE=data_provider
+
+      # 应用程序环境，设置为开发以将应用置于开发模式
+      - NODE_ENV=development
+
+      # 记录日志级别
       - PHALA_LOGGER_LEVEL=debug
-      - REDIS_ENDPOINT=redis://redis-q:6379/
-    ports:
-      - "4567:4567"
+
+      # 要和 PRB 的 lifecycle 的相同环境变量保持一致
+      - PHALA_BRIDGE_IDENTITY=staging
+
+      # WebSocket端点到中继链的Substrate RPC(例如，对于Khala来说，它是Kusama)
+      - PHALA_PARENT_CHAIN_ENDPOINT=ws://127.0.0.1:9945
+
+      # 指向副链的 Substrate RPC 的 WebSocket 端点（这里指向khala）。
+      - PHALA_CHAIN_ENDPOINT=ws://127.0.0.1:9944
+
+      # libp2p 的侦听地址的多地址（https://github.com/libp2p/specs/tree/master/addressing）
+      # 默认为'/ip4/0.0.0.0/tcp/0，/ip6/：：/tcp/0'，这意味着在每个接口上侦听一个随机端口。
+      # 仅支持 TCP 协议。在地址之间使用逗号。配置127.0.0.1可能会无法被发现
+      # - PHALA_WALKIE_LISTEN_ADDRESSES=/ip4/127.0.0.1/tcp/28888,/ip6/::/tcp/28889
+      - PHALA_WALKIE_LISTEN_ADDRESSES=/ip4/0.0.0.0/tcp/28888,/ip6/::/tcp/28889
+
+      # 用于对等发现的引导节点的多添加列表默认为"/ip4/0.0.0.0/tcp/18888，/ip6/：：/tcp/28889"，这意味着没有引导节点。
+      # 仅支持 TCP 协议。在地址之间使用逗号。
+      # - PHALA_WALKIE_BOOT_NODES=/ip4/0.0.0.0/tcp/18888，/ip6/：：/tcp/28889
+      - PHALA_WALKIE_BOOT_NODES=/ip4/0.0.0.0/tcp/18888,/ip6/::/tcp/18889
+
+      # BLOB服务session使用的最大内存为64G
+      - PHALA_LIFECYCLE_BLOB_SERVER_SESSION_MAX_MEMORY=64
+
+      # 存储标识密钥的路径默认为"./data/keys/id"，默认存储./data/keys/id
+      # - PHALA_PEER_ID_PREFIX=./data/keys/id
+
+      # the blob server, defaults to 8012
+      # PHALA_DATA_PROVIDER_LOCAL_SERVER_PORT=8012
+
+      # The path to database, defaults to './data/0'.
+      # - PHALA_LOCAL_DB_PATH=
+
+    entrypoint:
+      - "node"
+      - "--trace-warnings"
+      - "--experimental-json-modules"
+      - "--es-module-specifier-resolution=node"
+      - "--harmony-top-level-await"
+      # - "--trace-gc"
+      # - "--expose-gc"
+      # - "--no-compilation-cache"
+      # - "--max-old-space-size=10240"
+      # - "--max-heap-size=100"
+      # - "--no-always-promote-young-mc"
+      - "dist/index"
 
   monitor:
     image: phalanetwork/prb-monitor:next
     hostname: monitor
+    network_mode: host
     environment:
-      - "REDIS_ENDPOINT=redis://redis:6379"
-      - PHALA_NAMESPACE=default
-    ports:
-      - "3000:3000"
-      
-  node:
-    image: phalanetwork/khala-node:latest
-    container_name: node
-    hostname: node
-    ports:
-     - "9933:9933"
-     - "9934:9934"
-     - "9944:9944"
-     - "9945:9945"
-     - "30333:30333"
-     - "30334:30334"
-    environment:
-     - NODE_NAME=PNODE
-     - NODE_ROLE=MINER
-    volumes:
-     - /var/khala-dev-node:/root/data
+      - NS_FETCH=fetch
+      - NEXT_PUBLIC_NS_LIST=default
+      - PTP_BOOT_NODES=/ip4/127.0.0.1/tcp/28888
+    # ports:
+    #   - "3000:3000"
 
-  pruntime:
-    image: phalanetwork/phala-pruntime:latest
-    container_name: pruntime
-    hostname: pruntime
-    ports:
-     - "8000:8000"
-    devices:
-       - /dev/sgx_enclave
-       - /dev/sgx_provision
-       - /dev/isgx
+# services:
+  redis-q:
+    network_mode: host
+    image: redis:alpine
+    hostname: redis-q
+    restart: always
+    logging:
+      options:
+        max-size: "1g"
+    command: ["redis-server", "--port", "63792", "--appendonly", "no", '--save', '']
+    # ports:
+    #   - "63792:63792"
+
+  arena:
+    network_mode: host
+    image: phalanetwork/prb:next
+    hostname: arena
+    restart: always
+    depends_on:
+      - redis-q
     environment:
-     - EXTRA_OPTS=--cores=6
-     - ROCKET_ADDRESS=0.0.0.0
-    volumes:
-     - /var/khala-pruntime-data:/root/data
+      - PHALA_MODULE=utils/arena
+      - NODE_ENV=development
+      - PHALA_LOGGER_LEVEL=debug
+      - PHALA_NAMESPACE=default
+      - REDIS_ENDPOINT=redis://127.0.0.1:63792/
+    # ports:
+    #   - "4567:4567"
+
+  trade:
+    network_mode: host
+    image: phalanetwork/prb:next
+    hostname: trade
+    restart: always
+    volumes: *default-volume-config
+    logging:
+      options:
+        # max-size: "1g"
+        max-size: "500m"
+    depends_on:
+      - redis-q
+    environment:
+      - PHALA_MODULE=trade
+      - NODE_ENV=development
+      - PHALA_DB_NAMESPACE=default
+      - PHALA_DB_FETCH_NAMESPACE=fetch
+      - PHALA_DB_ENDPOINT=redis://127.0.0.1:6666
+      - PHALA_LOGGER_LEVEL=debug
+      - PHALA_PARENT_CHAIN_ENDPOINT=ws://127.0.0.1:9945
+      - PHALA_CHAIN_ENDPOINT=ws://127.0.0.1:9944
+      - PHALA_Q_REDIS_ENDPOINT=redis://127.0.0.1:63792/
+    entrypoint:
+      - "node"
+      - "--trace-warnings"
+      - "--experimental-json-modules"
+      - "--es-module-specifier-resolution=node"
+      - "--harmony-top-level-await"
+      # - "--max-old-space-size=10240"
+      - "dist/index"
+
+  lifecycle:
+    network_mode: host
+    image: phalanetwork/prb:next
+    hostname: lifecycle
+    restart: always
+    depends_on:
+      - redis-q
+    volumes: *default-volume-config
+    logging:
+      options:
+        # max-size: "1g"
+        max-size: "500m"
+    environment:
+      # 默认为false
+      # - PHALA_SYNC_ONLY=true
+      # - PHALA_SYNC_ONLY=false
+      - PHALA_MODULE=lifecycle
+      - NODE_ENV=development
+      - PHALA_LOGGER_LEVEL=debug
+
+      # 要和 dp 的 data_provider 的相同环境变量保持一致
+      - PHALA_BRIDGE_IDENTITY=staging
+
+      - PHALA_Q_REDIS_ENDPOINT=redis://127.0.0.1:63792/
+
+      # WebSocket端点到中继链的Substrate RPC(例如，对于Khala来说，它是Kusama)
+      - PHALA_PARENT_CHAIN_ENDPOINT=ws://127.0.0.1:9945
+      # 指向副链的 Substrate RPC 的 WebSocket 端点（这里指向khala）。
+      - PHALA_CHAIN_ENDPOINT=ws://127.0.0.1:9944      
+
+      # The size of LRU cache, defaults to 5000.
+      - PHALA_LRU_CACHE_SIZE=50
+      # LRU 缓存中项目的最大时间（以毫秒为单位），默认为 30 分钟。
+      - PHALA_LRU_CACHE_MAX_AGE=90000
+
+      - PHALA_PRPC_REQUEST_TIMEOUT=60000
+
+      # 应该是同一时间点，lifecycle一次性同步的最大worker数
+      - PHALA_RUNNER_MAX_WORKER_NUMBER=150
+
+      # 是否应该进入配置模式，它将仅启动 API 以添加/修改已保存的pools和workers，
+      # - PHALA_ENFORCE_MIN_BENCH_SCORE=true
+
+      # - PHALA_WALKIE_BOOT_NODES=/ip4/10.87.0.51/tcp/28888/p2p/QmbgiLdgeBhVmCfDtrFzC158HCkRTC4J38tZay2T3uxjtJ,/ip4/10.87.0.52/tcp/28888/p2p/QmWhwPfb2VtuBQtrepw9shoafGmvnXdKu8fNq7Yfw32jCN
+      - PHALA_WALKIE_BOOT_NODES=/ip4/127.0.0.1/tcp/28888/p2p/{YOUR DATA PROVIDERS's PEERID}
+      # - PHALA_WALKIE_LISTEN_ADDRESSES=/ip4/127.0.0.1/tcp/29888,/ip6/::/tcp/29889
+      - PHALA_WALKIE_LISTEN_ADDRESSES=/ip4/0.0.0.0/tcp/29888,/ip6/::/tcp/29889
+
+    mem_swappiness: 70
+    entrypoint:
+      - "node"
+      - "--trace-warnings"
+      - "--experimental-json-modules"
+      - "--es-module-specifier-resolution=node"
+      - "--harmony-top-level-await"
+      - "dist/index"
+    # ports:
+    #   - "29888:29888"
