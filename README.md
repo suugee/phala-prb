@@ -148,7 +148,6 @@ docker-compose up -d trade	#启动trade服务
 docker-compose up -d lifecycle	#启动lifecycle服务
 docker-compose up -d monitor	#启动monitor服务
 docker ps -a   #查看容器状态
-docker logs -f fetch   #查看fetch日志
 docker restart 容器名   #重启某个容器
 ```
 + Worker机常用操作
