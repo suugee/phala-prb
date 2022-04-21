@@ -64,7 +64,7 @@ wget -O /opt/phala/docker-compose.yml https://github.suugee.workers.dev/https://
 docker-compose -f /opt/phala/docker-compose.yml up -d
 
 ```
-#### 访问monitor：http://prb机器ip地址:3000
+#### 访问monitor：http://prb机器ip地址:3000     （在Monitor上可以手动单个添加Pool和Worker也可以通过下面的API批量添加。）
 
 ### 批量添加pools和workers
 
