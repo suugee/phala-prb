@@ -141,13 +141,13 @@ function install_driver()
 if [ $(lsb_release -r | grep -o "[0-9]*\.[0-9]*") == "18.04" ]; then
 	dcap_driverurl=https://download.01.org/intel-sgx/latest/dcap-latest/linux/distro/ubuntu18.04-server/sgx_linux_x64_driver_1.41.bin
 	dcap_driverbin=sgx_linux_x64_driver_1.41.bin
-	isgx_driverurl=https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu18.04-server/sgx_linux_x64_driver_2.11.0_2d2b795.bin
-	isgx_driverbin=sgx_linux_x64_driver_2.11.0_2d2b795.bin
+	isgx_driverurl=https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu18.04-server/sgx_linux_x64_driver_2.11.054c9c4c.bin
+	isgx_driverbin=sgx_linux_x64_driver_2.11.054c9c4c.bin
 elif [ $(lsb_release -r | grep -o "[0-9]*\.[0-9]*") = "20.04" ]; then
 	dcap_driverurl=https://download.01.org/intel-sgx/latest/dcap-latest/linux/distro/ubuntu20.04-server/sgx_linux_x64_driver_1.41.bin
 	dcap_driverbin=sgx_linux_x64_driver_1.41.bin
-	isgx_driverurl=https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu20.04-server/sgx_linux_x64_driver_2.11.0_2d2b795.bin
-	isgx_driverbin=sgx_linux_x64_driver_2.11.0_2d2b795.bin
+	isgx_driverurl=https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu20.04-server/sgx_linux_x64_driver_2.11.054c9c4c.bin
+	isgx_driverbin=sgx_linux_x64_driver_2.11.054c9c4c.bin
 else
 	log_err "----------系统版本不支持，phala目前仅支持Ubuntu 18.04/Ubuntu 20.04----------"
 	exit 1
