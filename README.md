@@ -128,8 +128,6 @@ docker-compose up -d pruntime
 ```
 ---
 
-### 编写不易，如果帮到你了，打赏点PHA吧O(∩_∩)O：`42iT6whLuSeWxqhXTYDiCyKqWwqNGWhWWmUS4Fdt4Ujnr21y`
-
 ### 常用命令
 + Node机常用操作
 ```
