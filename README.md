@@ -113,19 +113,13 @@ curl --location --request POST 'http://path.to.monitor/ptp/proxy/Qmbz...RjpwY/Cr
 ---
 
 ### 3. Worker机部署
-#### worker安装基础环境
-```
-sudo -i
-cd ~ && wget https://raw.githubusercontent.com/suugee/phala-prb/main/worker.sh
-chmod +x worker.sh && ./worker.sh
-```
+#### 安装基础环境
+  1.docker
+  2.docker-compose
+  3.sgx driver
+  注：可以使用手动部署或者通过修改官方solo脚本来达到环境和pruntime部署
 #### 启动pruntime
-```
-mkdir -p /opt/phala
-cd /opt/phala && mv docker-compose.yml docker-compose.yml.bak
-wget -O /opt/phala/docker-compose.yml https://raw.githubusercontent.com/suugee/phala-prb/main/pha_cluster.yml
-docker-compose up -d pruntime
-```
+
 ---
 
 ### 常用命令
