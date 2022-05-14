@@ -114,10 +114,10 @@ curl --location --request POST 'http://path.to.monitor/ptp/proxy/Qmbz...RjpwY/Cr
 
 ### 3. Worker机部署
 #### 安装基础环境
-  1.docker
-  2.docker-compose
-  3.sgx driver
-  注：可以使用手动部署或者通过修改官方solo脚本来达到环境和pruntime部署
+  - 1.docker
+  - 2.docker-compose
+  - 3.sgx driver
+  - 注：可以使用手动部署或者通过修改官方solo脚本来达到环境和pruntime部署
 #### 启动pruntime
 
 ---
