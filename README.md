@@ -3,7 +3,7 @@
 ### 如果你是PRB V0 升级 V2 [点击此处](https://github.com/suugee/phala-prb/blob/next/V0-V2.md)
 
 ### 本教程使用的集群架构：
-![本方案使用的集群架构](https://github.suugee.workers.dev/https://raw.githubusercontent.com/suugee/phala-prb/main/prb.png)
+![本方案使用的集群架构](https://raw.phala.one/suugee/phala-prb/main/prb.png)
 
 本方案适合50台内小型集群，也可以单独一台机器运行prb，如果集群更大，考虑node稳定性问题可以使用多node做主备、负载均衡或者[联系苏格](#联系苏格)为您定制集群方案，公益教程不提供其他免费指导请谅解。
 
@@ -48,7 +48,7 @@ chmod +x /usr/local/bin/docker-compose
 mkdir -p /opt/phala
 
 # 下载yml文件
-wget -O /opt/phala/node.yml https://git.phala.one/suugee/phala-prb/next/node.yml
+wget -O /opt/phala/node.yml https://raw.phala.one/suugee/phala-prb/next/node.yml
 
 docker-compose -f /opt/phala/node.yml up -d
 ```
@@ -58,7 +58,7 @@ docker-compose -f /opt/phala/node.yml up -d
 #### 如果和node机部署在同一台则无需重复安装Docker环境和下载配置文件：
 ```
 # 下载yml配置文件
-wget -O /opt/phala/docker-compose.yml https://git.phala.one/suugee/phala-prb/next/docker-compose.yml
+wget -O /opt/phala/docker-compose.yml https://raw.phala.one/suugee/phala-prb/next/docker-compose.yml
 
 # 一键启动所有服务
 docker-compose -f /opt/phala/docker-compose.yml up -d
