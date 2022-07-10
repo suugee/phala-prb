@@ -48,7 +48,7 @@ chmod +x /usr/local/bin/docker-compose
 mkdir -p /opt/phala
 
 # 下载yml文件
-wget -O /opt/phala/node.yml https://github.suugee.workers.dev/https://raw.githubusercontent.com/suugee/phala-prb/next/node.yml
+wget -O /opt/phala/node.yml https://git.phala.one/suugee/phala-prb/next/node.yml
 
 docker-compose -f /opt/phala/node.yml up -d
 ```
@@ -58,7 +58,7 @@ docker-compose -f /opt/phala/node.yml up -d
 #### 如果和node机部署在同一台则无需重复安装Docker环境和下载配置文件：
 ```
 # 下载yml配置文件
-wget -O /opt/phala/docker-compose.yml https://github.suugee.workers.dev/https://raw.githubusercontent.com/suugee/phala-prb/next/docker-compose.yml
+wget -O /opt/phala/docker-compose.yml https://git.phala.one/suugee/phala-prb/next/docker-compose.yml
 
 # 一键启动所有服务
 docker-compose -f /opt/phala/docker-compose.yml up -d
