@@ -98,53 +98,6 @@ services:
     # ports:
     #   - "63792:63792"
 
-  arena:
-    network_mode: host
-    image: phalanetwork/prb:next
-    hostname: arena
-    restart: always
-    depends_on:
-      - redis-q
-    environment:
-      - PHALA_MODULE=utils/arena
-      - NODE_ENV=development
-      - PHALA_LOGGER_LEVEL=debug
-      - PHALA_NAMESPACE=default
-      - REDIS_ENDPOINT=redis://127.0.0.1:63792/
-    # ports:
-    #   - "4567:4567"
-
-  trade:
-    network_mode: host
-    image: phalanetwork/prb:next
-    hostname: trade
-    restart: always
-    volumes: *default-volume-config
-    logging:
-      options:
-        # max-size: "1g"
-        max-size: "500m"
-    depends_on:
-      - redis-q
-    environment:
-      - PHALA_MODULE=trade
-      - NODE_ENV=development
-      - PHALA_DB_NAMESPACE=default
-      - PHALA_DB_FETCH_NAMESPACE=fetch
-      - PHALA_DB_ENDPOINT=redis://127.0.0.1:6666
-      - PHALA_LOGGER_LEVEL=debug
-      - PHALA_PARENT_CHAIN_ENDPOINT=ws://127.0.0.1:9945
-      - PHALA_CHAIN_ENDPOINT=ws://127.0.0.1:9944
-      - PHALA_Q_REDIS_ENDPOINT=redis://127.0.0.1:63792/
-    entrypoint:
-      - "node"
-      - "--trace-warnings"
-      - "--experimental-json-modules"
-      - "--es-module-specifier-resolution=node"
-      - "--harmony-top-level-await"
-      # - "--max-old-space-size=10240"
-      - "dist/index"
-
   lifecycle:
     network_mode: host
     image: phalanetwork/prb:next
