@@ -26,7 +26,7 @@
 - Docker ≥ Compose 1.29 或更新
 - CPU ≥ 10核以上高主频（i9十代、AMD3950X等）
 - 内存 ≥ 32G
-- 硬盘 ≥ 2T M.2 NVME
+- 硬盘 ≥ 4T 固态 (目前Node数据1.6T，DP数据1.2T)
 - 内网 千兆交换机，千兆网卡，六类/超六类千兆网线
 - 以上为跑node+prb机器的建议配置，非worker机要求，worker机必须要支持SGX。
 ---
