@@ -66,6 +66,8 @@ docker-compose -f /opt/phala/docker-compose.yml up -d
 ```
 #### 访问monitor：http://prb机器ip地址:3000     （在Monitor上可以手动单个添加Pool和Worker也可以通过下面的API批量添加。）
 
+- 提示：在node没有同步到最新高度时，dp可能会不停重启，所以建议是node同步到最新后再启动pRB
+
 ### 批量添加pools和workers
 
 - 导入pools
@@ -117,8 +119,8 @@ curl --location --request POST 'http://path.to.monitor/ptp/proxy/Qmbz...RjpwY/Cr
   - 1.docker
   - 2.docker-compose
   - 3.sgx driver
-  - 注：可以使用手动部署或者通过修改官方solo脚本来达到环境和pruntime部署
-#### 启动pruntime
+  - 注：可以使用docker run ...手动部署或者通过修改官方solo脚本来达到环境和pRuntime部署
+#### 启动pRuntime
 
 ---
 
